@@ -31,8 +31,13 @@ class MainActivity : AppCompatActivity() {
 
         ViewModelInit()
 
+        ImageClick()
 
 
+
+    }
+
+    private fun ImageClick() {
         find.setOnClickListener(View.OnClickListener {
 
             val apix = RetrofitClientInstance.getRetrofitInstance()!!.create(ApiService::class.java)
@@ -49,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
                     imageModel = response.body()!!
 
-                   // InitData(imageModel)
+                    // InitData(imageModel)
 
                     LoadData(imageModel)
                     itemList.adapter!!.notifyDataSetChanged()
@@ -65,9 +70,6 @@ class MainActivity : AppCompatActivity() {
             })
             Toast.makeText(this, editext.text.toString(), Toast.LENGTH_LONG).show()
         })
-
-
-
     }
 
     private fun StartBase() {
