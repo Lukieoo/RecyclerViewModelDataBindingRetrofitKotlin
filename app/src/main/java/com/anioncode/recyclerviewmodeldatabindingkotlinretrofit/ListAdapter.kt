@@ -15,7 +15,7 @@ import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.modelApi.ImageMo
 import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.modelApi.Result
 
 
-class ListAdapter(private val list: ImageModel, var context: Activity) :
+class ListAdapter(private var list: ImageModel, var context: Activity) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
 
@@ -25,6 +25,10 @@ class ListAdapter(private val list: ImageModel, var context: Activity) :
         val binding = ItemTekstBinding.inflate(inflater)
         return ListViewHolder(binding)
 
+    }
+
+     fun setData(  list: ImageModel){
+        this.list=list
     }
 
     override fun getItemCount(): Int = list.results.size
