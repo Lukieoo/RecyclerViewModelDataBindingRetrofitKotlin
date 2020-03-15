@@ -26,7 +26,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val api = RetrofitClientInstance.getRetrofitInstance()!!.create(ApiService::class.java)
-        api.fetchAllUsers().enqueue(object : Callback<ImageModel> {
+        val params: MutableMap<String, String> =
+            HashMap()
+        params["client_id"] = "_M00yQiE78fDwvaXtnv-a53JKNAqUalD6YbuDHmztLA"
+        params["page"] = "1"
+        params["query"] = "Bea"
+
+        api.fetchAllUsers(params).enqueue(object : Callback<ImageModel> {
 
 
             override fun onResponse(call: Call<ImageModel>, response: Response<ImageModel>) {
@@ -60,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         itemList.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = ListAdapter(imageModel)
+            adapter = ListAdapter(imageModel,this@MainActivity)
         }
 
     }

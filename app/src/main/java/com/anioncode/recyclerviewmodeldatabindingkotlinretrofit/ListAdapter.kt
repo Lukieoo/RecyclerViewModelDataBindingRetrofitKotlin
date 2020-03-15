@@ -1,13 +1,21 @@
 package com.anioncode.recyclerviewmodeldatabindingkotlinretrofit
 
+import android.R.attr.label
+import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
+import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.databinding.ItemTekstBinding
 import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.modelApi.ImageModel
 import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.modelApi.Result
-import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.databinding.ItemTekstBinding
 
-class ListAdapter(private val list: ImageModel) :
+
+class ListAdapter(private val list: ImageModel, var context: Activity) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
 
@@ -23,8 +31,16 @@ class ListAdapter(private val list: ImageModel) :
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
 
+        holder.itemView.setOnClickListener {
+            val clipboard =
+                context.applicationContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("label", list.results[position].urls.regular)
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(context,"Copied to clipboard",Toast.LENGTH_LONG).show()
+        }
 
         holder.bind(list.results[position])
+
     }
 
 
