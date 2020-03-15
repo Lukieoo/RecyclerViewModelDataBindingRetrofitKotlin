@@ -1,33 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="mydata"
-            type="com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.Model" />
+            type="com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.modelApi.Result" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:gravity="center"
+        android:layout_height="wrap_content">
 
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_android" />
-
-        <TextView
-            android:id="@+id/tekst"
+        <LinearLayout
+            android:id="@+id/line1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="@{mydata.title}"
-            />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
 
-    </LinearLayout>
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:elevation="1dp"
+                app:cardCornerRadius="5dp">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_android"
+                    tools:MyExample="@{mydata.urls.regular}" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!--   Tutaj należy dodać nasz element     -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tekst1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@{mydata.description}"  />
+                <TextView
+                    android:layout_below="@id/tekst1"
+                    android:id="@+id/tekst2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="width :" />
+                <TextView
+                    android:layout_below="@id/tekst1"
+                    android:layout_toRightOf="@id/tekst2"
+                    android:id="@+id/tekst21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@{mydata.width}" />
+                <TextView
+                    android:layout_below="@id/tekst2"
+                    android:id="@+id/tekst3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="height :" />
+                <TextView
+                    android:layout_below="@id/tekst2"
+                    android:layout_toRightOf="@id/tekst3"
+                    android:id="@+id/tekst31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@{mydata.height}" />
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+        <TextView
+            android:backgroundTint="@color/colorPrimary"
+            android:id="@+id/like"
+            android:gravity="center"
+            android:text="@{mydata.likes}"
+            android:textColor="@android:color/white"
+            android:textSize="6sp"
+            android:background="@drawable/ic_star"
+            android:layout_margin="10dp"
+            android:layout_alignParentEnd="true"
+             android:layout_above="@+id/view"
+            android:src="@drawable/ic_star"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <View
+            android:id="@+id/view"
+            android:layout_below="@id/line1"
+            android:background="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+    </RelativeLayout>
 </layout>

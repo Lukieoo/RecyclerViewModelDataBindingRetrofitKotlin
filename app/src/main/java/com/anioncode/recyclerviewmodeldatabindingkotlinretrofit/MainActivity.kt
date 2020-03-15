@@ -4,24 +4,55 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.Connection.ApiService
+import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.Connection.RetrofitClientInstance
+import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.modelApi.ImageModel
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var mainViewModel: MainViewModel
-    var lista = mutableListOf<Model>()
+    lateinit var imageModel :ImageModel
+    var lista = mutableListOf<ImageModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        InitData()
-        ViewModelInit()
-        LoadData()
+        val api = RetrofitClientInstance.getRetrofitInstance()!!.create(ApiService::class.java)
+        api.fetchAllUsers().enqueue(object : Callback<ImageModel> {
+
+
+            override fun onResponse(call: Call<ImageModel>, response: Response<ImageModel>) {
+
+                imageModel = response.body()!!
+                println(imageModel!!.results[0].urls.regular)
+           //     println(response.body())
+
+                InitData()
+                ViewModelInit()
+                LoadData(imageModel)
+            }
+
+            override fun onFailure(call: Call<ImageModel>, t: Throwable) {
+
+                println("It is no ok")
+
+            }
+
+
+        })
+
+
+
+
+
 
     }
 
@@ -29,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         itemList.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = ListAdapter(lista)
+            adapter = ListAdapter(imageModel)
         }
 
     }
@@ -45,27 +76,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun LoadData() {
+    fun LoadData(imageModel : ImageModel) {
 
-        lista.add(Model("Apple Pie"))
-        lista.add(Model("Banana Bread"))
-        lista.add(Model("Cupcake"))
-        lista.add(Model("Donut"))
-        lista.add(Model("Eclair"))
-        lista.add(Model("Froyo"))
-        lista.add(Model("Gingerbread"))
-        lista.add(Model("Honeycomb"))
-        lista.add(Model("Ice Cream Sandwich"))
-        lista.add(Model("Jelly Bean"))
-        lista.add(Model("KitKat"))
-        lista.add(Model("Lollipop"))
-        lista.add(Model("Marshmallow"))
-        lista.add(Model("Nougat"))
-        lista.add(Model("Oreo"))
-        lista.add(Model("Pie"))
-        lista.add(Model("Android 10"))
-        lista.add(Model("Android 11 Developer Preview"))
-
-        mainViewModel.setList(lista)
+        mainViewModel.setList(imageModel)
     }
 }

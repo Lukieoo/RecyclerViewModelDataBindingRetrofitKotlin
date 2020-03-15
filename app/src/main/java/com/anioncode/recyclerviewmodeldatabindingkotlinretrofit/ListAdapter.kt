@@ -1,13 +1,14 @@
 package com.anioncode.recyclerviewmodeldatabindingkotlinretrofit
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.modelApi.ImageModel
+import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.modelApi.Result
 import com.anioncode.recyclerviewmodeldatabindingkotlinretrofit.databinding.ItemTekstBinding
 
-class ListAdapter(private val list: List<Model>) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
+class ListAdapter(private val list: ImageModel) :
+    RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -18,27 +19,22 @@ class ListAdapter(private val list: List<Model>) : RecyclerView.Adapter<ListAdap
 
     }
 
-    override fun getItemCount(): Int =list.size
+    override fun getItemCount(): Int = list.results.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
 
 
-        holder.bind(list[position])
+        holder.bind(list.results[position])
     }
 
 
-    inner   class ListViewHolder(val binding: ItemTekstBinding) :RecyclerView.ViewHolder(binding.root) {
-      //  private var mTitleView: TextView? = null
+    inner class ListViewHolder(val binding: ItemTekstBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-//        init {
-//            mTitleView = itemView.findViewById(R.id.tekst)
-//
-//        }
-
-        fun bind(movie: Model) {
-
-                binding.mydata = movie
-                binding.executePendingBindings()
+        fun bind(movie: Result) {
+///Ważne by odnosić się do naszego modelu
+            binding.mydata = movie
+            binding.executePendingBindings()
 
         }
     }
